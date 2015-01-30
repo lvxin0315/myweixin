@@ -31,7 +31,7 @@ class ContentController extends Controller{
         $name = I('name');
         $map['status'] = 1;
         $map['category_id'] = get_category_id($name);
-        $list = get_document_list($map,$order = 'id DESC',$p = 1,$rows = 20);
+        $list = get_document_list($map,$order = 'id DESC',$p = 1,$rows = 10);
         $this->$name($list);
         $this->display($name);
     }
