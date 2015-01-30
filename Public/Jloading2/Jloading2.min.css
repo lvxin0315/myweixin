@@ -1,8 +1,0 @@
-div.jloading-box{position:fixed;z-index:1000000000000;background-color:#8EE3FC;width:100%;height:8px;line-height:8px;left:0;top:0;right:0;font-size:18px;font-family:"微软雅黑";-webkit-animation:barberpole .9s linear infinite;animation:barberpole .9s linear infinite;-moz-animation:barberpole 1.2s linear infinite;background-image:-webkit-linear-gradient(0deg,#C1F0FE 50%,transparent 80%);background-image:-moz-linear-gradient(0deg,#C1F0FE 50%,transparent 80%)}
-div#jloading-box-filter{position:fixed;left:0;right:0;top:0;bottom:0;width:100%;height:100%;background-color:#000;opacity:.1;z-index:100000000000}
-@-webkit-keyframes barberpole{0%{background-position:0 0}
-100%{background-position:1400px 0}}
-@-moz-keyframes barberpole{0%{background-position:0 0}
-100%{background-position:1400px 0}}
-@keyframes barberpole{0%{background-position:0 0}
-100%{background-position:1400px 0}}

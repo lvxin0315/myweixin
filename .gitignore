@@ -1,5 +1,5 @@
 .idea/
-Application/Runtime/Cache/
-Application/Runtime/Data/
-Application/Runtime/Logs/
-Application/Runtime/Temp/
+Runtime/Cache/
+Runtime/Data/
+Runtime/Logs/
+Runtime/Temp/
