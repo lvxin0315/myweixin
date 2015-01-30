@@ -1,0 +1,96 @@
+<extend name="Public:common" />
+<block name="body">
+    <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.all.min.js"></script>
+    <div class="container">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="title" class="col-sm-2 control-label">标题</label>
+                <div class="col-sm-10">
+                    <input type="text" id="title" class="form-control" placeholder="标题">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="title" class="col-sm-2 control-label">类型</label>
+                <div class="col-sm-4">
+                    <select class="form-control" id="type">
+                        <volist name="_typeList" id="tvo">
+                            <option value="{$tvo['key']}">{$tvo['title']}</option>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="title" class="col-sm-2 control-label">描述</label>
+                <div class="col-sm-10">
+                    <textarea id="des" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="title" class="col-sm-2 control-label">封面</label>
+                <div class="col-sm-10">
+                    <input type="file" id="pic" placeholder="封面">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="editor" class="col-sm-2 control-label">详情</label>
+                <div class="col-sm-10">
+                    <script id="editor" type="text/plain" style="width:100%;height:400px;"></script>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <a id="sub" class="btn btn-default">提交</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        var ue = UE.getEditor('editor');
+        $('#sub').click(function(){
+            var url = "{:U('Admin/Index/doAdd')}";
+            var data = new FormData();
+            data.append("pic", document.getElementById('pic').files[0]);
+            data.append("title",$('#title').val());
+            data.append("type",$('#type').val());
+            data.append("des",$('#des').val());
+            data.append("type",$('#type').val());
+            data.append("html",UE.getEditor('editor').getContent());
+            var xhr = new XMLHttpRequest();
+            /**
+             * 进度条
+             * xhr.upload.addEventListener("progress", uploadProgress, false);
+             * */
+            xhr.addEventListener("load", uploadComplete, false);
+            xhr.addEventListener("error", uploadFailed, false);
+            xhr.addEventListener("abort", uploadCanceled, false);
+            xhr.open("POST",url);
+            Jloading(true);
+            xhr.send(data);
+            function uploadProgress(){
+                alert(1);
+            }
+            function uploadComplete(){
+                Jloading(false);
+                if(xhr.response == 'success'){
+                    Jmessage({ type: 'success',info:"添加成功"});
+                }else{
+                    Jmessage({ type: 'error',info:"添加失败"});
+                }
+            }
+            function uploadFailed(){
+                Jloading(false);
+                Jmessage({ type: 'error',info:"添加失败"});
+            }
+            function uploadCanceled(){
+                Jloading(false);
+                Jmessage({ type: 'error',info:"操作取消"});
+            }
+        });
+    </script>
+    <script>
+        $(function(){
+            $('#content').addClass('active');
+        });
+    </script>
+</block>

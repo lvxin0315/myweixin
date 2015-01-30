@@ -1,0 +1,42 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="MobileOptimized" content="240"/>
+<meta name="Iphone-content" content="320"/>
+<meta name="format-detection" content="telephone=no" />
+<title>title</title>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap-3.3.0/css/bootstrap.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.0/js/bootstrap.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/my.css"/>
+<!--jy-->
+<script type="text/javascript" src="__PUBLIC__/Jloading2/Jloading2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Jloading2/Jloading2.min.css"/>
+<script type="text/javascript" src="__PUBLIC__/Jmessage/Jmessage.min.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Jmessage/Jmessage.min.css"/>
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+<script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.0/js/html5shiv.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/respond.min.js"></script>
+<![endif]-->
+        <?php
+            $opt = C('WEIXIN_OPTIONS');
+        ?>
+<script>
+    var dataForWeixin={
+        appId:"",
+        MsgImg:"{:C('WEB_SITE')}"+"/Public/images/logo.jpg",
+        TLImg:"{:C('WEB_SITE')}"+"/Public/images/logo.jpg",
+        url:"http://mp.weixin.qq.com/s?__biz=MjM5NTc0OTExNQ==&mid=202023470&idx=1&sn=15a5699b1bc063f46f60c1363e8c3872#rd",
+        title:"呆萌圈，最大的宠物圈~",
+        desc:"来呆萌圈，来秀秀你的宝贝吧，每天都会有最适合你的内容~",
+        fakeid:"",
+        prepare:function(e){
+
+        },
+        callback:function(e){
+            alert("感谢您的分享");
+        }
+    };
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/wechat.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/my.js"></script>

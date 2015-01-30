@@ -1,0 +1,40 @@
+<extend name="Public:common" />
+<block name="body">
+    <body class="my">
+        <div class="container containerSmall" id="my-body">
+            <div class="row my-logo">
+                <div class="navbar-fixed-top" role="navigation">
+                    <div class="container-fluid">
+                        <div class="col-xs-2 col-xs-offset-0" >
+                            <img src="__PUBLIC__/images/logo.jpg" id="logo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="my-detail">
+                    <div class="col-xs-12">
+                        <div>
+                            <p class="my-detail-p">
+                                各位小主人们，感谢您能加入“呆萌圈”，小编会为您分享给多的宠物小常识，同时也希望各位能积极分享自己的爱宠~
+                            </p>
+                            <p class="my-detail-p">
+                                “呆萌圈”订阅号使用方式：<br>
+                                &nbsp;&nbsp;发送《照片》即可分享<br>
+                                &nbsp;&nbsp;发送“help”即可获得使用帮助";
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+                    <div class="container-fluid my-bottom-menu">
+                        <div id="menu1" class="col-xs-6 dimenu glyphicon glyphicon-heart" data-url="{:U('Home/Content/lists',array('type'=>'shangpin'))}"></div>
+                        <div id="menu2" class="col-xs-6 dimenu glyphicon glyphicon-star" data-url="{:U('Home/Content/lists',array('type'=>'xinxianshi'))}"></div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </body>
+</block>

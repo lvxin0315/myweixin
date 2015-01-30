@@ -1,0 +1,40 @@
+<extend name="Public:common" />
+<block name="body">
+    <body>
+    <style>
+        html,body{ background-color: #E2EEFF; }
+        html,body,article,section,span,h1,h2,h3,h4,div{font-family: "微软雅黑"}
+        .myHeader{ padding: 0px 15px 55px 15px; color: #fff; border-bottom: 3px solid #F5D423;border-top: 4px solid #F5D423; background-color: #3388FF; position: relative; z-index: 9;}
+        .myHeader h4{ margin: 0; padding: 10px 0px 0px 0px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+        .myHeader h5{ margin: 5px 0px; line-height: 30px;}
+        .myArticle{ width: 92%; padding: 10px;  border-radius: 5px; box-shadow: 3px 3px 4px rgba(51,136,255,0.3); height: auto; background-color: #fff; overflow: hidden; zoom:1; border: 1px solid #3388FF;border-top: 2px solid #EAD62C; min-height: 1px;  font-size: 16px; position: absolute; top: 70px; z-index: 10; left: 3%; margin-bottom: 30px;}
+        .icon{ margin-right: 5px;}
+        .myLi{ border: none; color: #4F5052;}
+        .btn-danger{ margin-right: 5px;}
+
+    </style>
+    <header class="myHeader">
+        <hgroup>
+            <h4><span class="icon icon-tag"></span>{$title}</h4>
+            <h5>
+                <span class="pull-left">2014-06-06 14:00</span>
+            </h5>
+        </hgroup>
+    </header>
+    <article class="myArticle">
+        <section>
+            <div></div>
+            <p id="my-content">
+                {$html}
+            </p>
+        </section>
+        <section class="Mydetail">
+            <ul class="list-group">
+                <li class="list-group-item myLi"><span class="icon icon-envelope"></span>邮箱: 11111@qq.com</li>
+            </ul>
+        </section>
+        <a href="tel:123456789" class="btn btn-success pull-right"><span class="icon icon-phone"></span>联系我们</a>
+        <a href="tel:123456789" class="btn btn-danger pull-right"><span class="icon icon-list-alt"></span>去列表</a>
+    </article>
+    </body>
+</block>

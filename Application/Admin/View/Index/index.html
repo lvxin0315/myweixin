@@ -1,0 +1,38 @@
+<extend name="Public:common" />
+<block name="body">
+    <div class="container">
+        <div class="row">
+            <a class="btn btn-success" href="{:U('Admin/Index/add')}">add</a>
+        </div>
+        <br>
+        <div class="row">
+            <table class="table table-hover">
+                <tr>
+                    <th>id</th>
+                    <th>标题</th>
+                    <th>封面</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                </tr>
+                <volist name="_list" id="vo">
+                    <tr>
+                        <td>{$vo['id']}</td>
+                        <td>{$vo['title']}</td>
+                        <td><img src="{$vo['pic']}" style="width: 50px;height: 50px;" ></td>
+                        <td>{:date('Y-m-d',$vo['create_time'])}</td>
+                        <td>
+                            <a href="{:U('Admin/Index/edit',array('id'=>$vo['id']))}" class="btn btn-warning">编辑</a>
+                            &nbsp;
+                            <a href="{:U('Admin/Index/detail',array('id'=>$vo['id']))}" class="btn btn-info">描述</a>
+                        </td>
+                    </tr>
+                </volist>
+            </table>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            $('#content').addClass('active');
+        });
+    </script>
+</block>
