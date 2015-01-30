@@ -5,7 +5,7 @@
     </div>
     <div class="am-g am-intro-bd">
         <div class="am-intro-left am-u-sm-5">
-            <img src="{pic}" alt="小娜" />
+            <img src="{pic}" alt="呆萌圈" />
         </div>
         <div class="am-intro-right am-u-sm-7">
             {content}

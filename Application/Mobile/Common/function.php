@@ -236,6 +236,18 @@ function get_category_id($name){
  * @param Integer $p 当前页
  * @param Integer $rows 页数
 */
-function get_document($where = array(),$order = 'id DESC',$p = 1,$rows = 20){
-    return M('document')->where($where)->order($order)->limit($p,$rows)->select();
+function get_document_list($where = array(),$order = 'id DESC',$p = 1,$rows = 20){
+    return M('document')->where($where)->order($order)->limit(($p-1)*$rows,$rows)->select();
+}
+
+/**
+ * 根据id获取document详情
+ * @param Integer $id
+ * @return Array
+*/
+function get_document($id){
+    $document = M('document')->find($id);
+    $article = M('document_article')->find($id);
+    $document['pic'] = get_cover($document['cover_id'],'path');
+    return array_merge($document,$article);
 }

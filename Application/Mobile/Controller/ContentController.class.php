@@ -15,11 +15,15 @@ class ContentController extends Controller{
 
     public function index(){
         //获取轮播图
-        $sliderList = get_document(array('category_id'=>get_category_id('slider')));
+        $sliderList = get_document_list(array('category_id'=>get_category_id('slider')));
         foreach($sliderList as $key => $vo){
-            $sliderList[$key]['url'] = get_cover($vo['cover_id']);
+            $sliderList[$key]['url'] = get_cover($vo['cover_id'],'path');
         }
         $this->assign('_sliderList',$sliderList);
+        //简介
+        $detail = get_document_list(array('category_id'=>get_category_id('me')),$order = 'id DESC',$p = 1,$rows = 1);
+        $detail[0]['pic'] = get_cover($detail[0]['cover_id'],'path');
+        $this->assign('_detail',$detail[0]);
         $this->display();
     }
 
@@ -27,22 +31,50 @@ class ContentController extends Controller{
         $name = I('name');
         $map['status'] = 1;
         $map['category_id'] = get_category_id($name);
-        $list = M('document')->where(' = 1')->order('id DESC')->limit(20)->select();
-        foreach($list as $vo){
-
-        }
-        $this->display();
+        $list = get_document_list($map,$order = 'id DESC',$p = 1,$rows = 20);
+        $this->$name($list);
+        $this->display($name);
     }
 
     public function detail(){
-
-    }
-
-    public function test(){
-
+        $id = I('id');
+        $doc = get_document($id);
+        $this->assign('_doc',$doc);
+        $this->display();
     }
 
     public function about(){
 
+    }
+    public function telMe(){
+        $map['status'] = 1;
+        $map['category_id'] = get_category_id('tel_me');
+        $detail = get_document_list(array('category_id'=>get_category_id('tel_me')),$order = 'id DESC',$p = 1,$rows = 1);
+        $doc = get_document($detail[0]['id']);
+        $this->assign('_doc',$doc);
+        $this->display('tel_me');
+    }
+    //整理goods格式
+    private function goods($list){
+        foreach($list as $key => $value){
+            $list[$key][''] = $value[''];
+        }
+        $this->assign('_list',$list);
+    }
+    //整理picture格式
+    private function picture($list){
+        foreach($list as $key => $value){
+            $list[$key]['picUrl'] = get_cover($value['cover_id'],'path');
+            $list[$key]['des'] = $value['description'];
+            $list[$key]['date'] = date('Y-m-d',$value['update_time']);
+        }
+        $this->assign('_list',$list);
+    }
+    //整理article格式
+    private function article($list){
+        foreach($list as $key => $value){
+            $list[$key][] = $value[''];
+        }
+        $this->assign('_list',$list);
     }
 } 
