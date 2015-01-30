@@ -14,6 +14,6 @@
 
 define('UC_APP_ID', 1); //应用ID
 define('UC_API_TYPE', 'Model'); //可选值 Model / Service
-define('UC_AUTH_KEY', '[AUTH_KEY]'); //加密KEY
-define('UC_DB_DSN', '[DB_TYPE]://[DB_USER]:[DB_PWD]@[DB_HOST]:[DB_PORT]/[DB_NAME]'); // 数据库连接，使用Model方式调用API必须配置此项
-define('UC_TABLE_PREFIX', '[DB_PREFIX]'); // 数据表前缀，使用Model方式调用API必须配置此项
+define('UC_AUTH_KEY', '7X%cUE1#RKaB^/_*?!Q4oJ(2W@+O{>3)`tv"<uf5'); //加密KEY
+define('UC_DB_DSN', 'mysqli://root:root@localhost:3306/ot_myweixin'); // 数据库连接，使用Model方式调用API必须配置此项
+define('UC_TABLE_PREFIX', 'mwx_'); // 数据表前缀，使用Model方式调用API必须配置此项
