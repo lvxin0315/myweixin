@@ -129,14 +129,16 @@ class IndexController extends Controller{
 //    }
     //消息回复，包含昵称设置判断
     private function replyText($message){
-        $user = M('user')->where("openid LIKE '{$this->wechatObj->getRev()->getRevFrom()}'")->find();
-        if(empty($user['nickname'])){
-            $url = C('WEB_SITE').U('Mobile/User/info',array('openid'=>$this->wechatObj->getRev()->getRevFrom()));
-            $message .= "\r\n"."快来完善自己<a href='{$url}'>昵称</a>，大家可是都有昵称了呢~";
-        }else{
-            $url = C('WEB_SITE').U('Mobile/Content/index',array('openid'=>$this->wechatObj->getRev()->getRevFrom()));
-            $message .= "\r\n"."快来看看，<a href='{$url}'>点击这里</a>~";
-        }
+//        $user = M('user')->where("openid LIKE '{$this->wechatObj->getRev()->getRevFrom()}'")->find();
+//        if(empty($user['nickname'])){
+//            $url = C('WEB_SITE').U('Mobile/User/info',array('openid'=>$this->wechatObj->getRev()->getRevFrom()));
+//            $message .= "\r\n"."快来完善自己<a href='{$url}'>昵称</a>，大家可是都有昵称了呢~";
+//        }else{
+//            $url = C('WEB_SITE').U('Mobile/Content/index',array('openid'=>$this->wechatObj->getRev()->getRevFrom()));
+//            $message .= "\r\n"."快来看看，<a href='{$url}'>点击这里</a>~";
+//        }
+        $url = C('WEB_SITE').U('Mobile/Content/index');
+        $message .= "\r\n"."快来看看，<a href='{$url}'>点击这里</a>~";
         $this->wechatObj->text($message)->reply();
     }
     //回复欢迎语及使用简要说明
@@ -156,14 +158,16 @@ class IndexController extends Controller{
 //            $message.= $v['key']."---".$v['des']."\r\n";
 //        }
 //        $this->wechatObj->text($message)->reply();
-        $user = M('user')->where("openid LIKE '{$this->wechatObj->getRev()->getRevFrom()}'")->find();
-        if(empty($user['nickname'])){
-            $url = C('WEB_SITE').U('Mobile/User/info',array('openid'=>$this->wechatObj->getRev()->getRevFrom()));
-            $message = "快来完善自己<a href='{$url}'>昵称</a>，大家可是都有昵称了呢~";
-        }else{
-            $url = C('WEB_SITE').U('Mobile/Content/index',array('openid'=>$this->wechatObj->getRev()->getRevFrom()));
-            $message = "快来看看，<a href='{$url}'>点击这里</a>~";
-        }
+//        $user = M('user')->where("openid LIKE '{$this->wechatObj->getRev()->getRevFrom()}'")->find();
+//        if(empty($user['nickname'])){
+//            $url = C('WEB_SITE').U('Mobile/User/info',array('openid'=>$this->wechatObj->getRev()->getRevFrom()));
+//            $message = "快来完善自己<a href='{$url}'>昵称</a>，大家可是都有昵称了呢~";
+//        }else{
+//            $url = C('WEB_SITE').U('Mobile/Content/index',array('openid'=>$this->wechatObj->getRev()->getRevFrom()));
+//            $message = "快来看看，<a href='{$url}'>点击这里</a>~";
+//        }
+        $url = C('WEB_SITE').U('Mobile/Content/index');
+        $message = "快来看看，<a href='{$url}'>点击这里</a>~";
         $this->wechatObj->text($message)->reply();
     }
     //宠物店相关内容

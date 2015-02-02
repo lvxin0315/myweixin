@@ -1,7 +1,0 @@
-<extend name="Public:common" />
-<block name="body">
-    {:tpl_head('呆萌圈',C('MOBILE_SITE'))}
-    {:slider($_sliderList)}
-    {:detail($_detail['title'],$_detail['pic'],U('Mobile/Content/detail',array('id'=>$_detail['id'])),$_detail['description'])}
-    {:widget()}
-</block>

@@ -19,6 +19,8 @@ const WIDGET_LI = 'widget-li.tpl';
 const SLIDER = 'slider.tpl';
 const SLIDER_LI = 'slider-li.tpl';
 const DETAIL = 'detail.tpl';
+const PIC_CONTENT = 'pic-content.tpl';
+const PIC_CONTENT_LI = 'pic-content-li.tpl';
 
 /**
  * 导航处理
@@ -214,6 +216,32 @@ function detail($title,$pic,$url,$content){
     $detailHtml = str_replace('{pic}',$pic,$detailHtml);
     $detailHtml = str_replace('{url}',$url,$detailHtml);
     $html = str_replace('{content}',$content,$detailHtml);
+    return str_replace(array("\r\n","\r","\n"),"",$html);
+}
+/**
+ * 图文列表
+ * @param String $title 标题
+ * @param String $url 更多路径
+ * @param Array $list 列表数据
+ *      格式：array(
+ *          array('pic'=>'pic','title'=>'title','des'=>'des'),
+ *          ……
+ *      )
+ * @return String
+*/
+function pic_content($title,$list){
+    $picContentHtml = file_get_contents(AMAZE_TPL_PATH . PIC_CONTENT);
+    $picContentLiHtml = file_get_contents(AMAZE_TPL_PATH . PIC_CONTENT_LI);
+    $li = '';
+    foreach($list as $vo){
+        $pic_content_li_html = $picContentLiHtml;
+        $pic_content_li_html = str_replace('{title}',$vo['title'],$pic_content_li_html);
+        $pic_content_li_html = str_replace('{url}',$vo['url'],$pic_content_li_html);
+        $pic_content_li_html = str_replace('{picUrl}',$vo['picUrl'],$pic_content_li_html);
+        $li .= str_replace('{des}',$vo['des'],$pic_content_li_html);
+    }
+    $picContentHtml = str_replace('{title}',$title,$picContentHtml);
+    $html = str_replace('{picContentLi}',$li,$picContentHtml);
     return str_replace(array("\r\n","\r","\n"),"",$html);
 }
 

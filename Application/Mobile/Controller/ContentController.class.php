@@ -9,9 +9,8 @@
 namespace Mobile\Controller;
 
 
-use Think\Controller;
 
-class ContentController extends Controller{
+class ContentController extends BaseController{
 
     public function index(){
         //获取轮播图
@@ -54,10 +53,13 @@ class ContentController extends Controller{
         $this->assign('_doc',$doc);
         $this->display('tel_me');
     }
-    //整理goods格式
-    private function goods($list){
+    //整理gou格式
+    private function gou($list){
         foreach($list as $key => $value){
-            $list[$key][''] = $value[''];
+            $list[$key]['picUrl'] = get_cover($value['cover_id'],'path');
+            $list[$key]['des'] = $value['description'];
+            $list[$key]['date'] = date('Y-m-d',$value['update_time']);
+            $list[$key]['url'] = U('Mobile/Content/detail',array('id'=>$value['id']));
         }
         $this->assign('_list',$list);
     }
@@ -73,7 +75,9 @@ class ContentController extends Controller{
     //整理article格式
     private function article($list){
         foreach($list as $key => $value){
-            $list[$key][] = $value[''];
+            $list[$key]['picUrl'] = get_cover($value['cover_id'],'path');
+            $list[$key]['des'] = $value['description'];
+            $list[$key]['date'] = date('Y-m-d',$value['update_time']);
         }
         $this->assign('_list',$list);
     }

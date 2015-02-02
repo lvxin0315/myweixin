@@ -3,7 +3,7 @@
         'WIDGET_CONFIG' => array(
             array('title'=>'趣图','url'=>'http://wei.demoto.cn/Mobile/Content/lists/name/picture.html','class'=>'am-icon-area-chart'),
             array('title'=>'文章','url'=>'http://wei.demoto.cn/Mobile/Content/lists/name/article.html','class'=>'am-icon-newspaper-o'),
-            array('title'=>'推荐','url'=>'http://wei.demoto.cn/Mobile/Content/lists/name/goods.html','class'=>'am-icon-thumbs-o-up'),
+            array('title'=>'推荐','url'=>'http://wei.demoto.cn/Mobile/Content/lists/name/gou.html','class'=>'am-icon-thumbs-o-up'),
 //            array('title'=>'小心','url'=>'http://www.baidu.com?id=4','class'=>'am-icon-bomb'),
 //            array('title'=>'献爱心','url'=>'http://www.baidu.com?id=5','class'=>'am-icon-heart'),
 //            array('title'=>'评论','url'=>'http://www.baidu.com?id=6','class'=>'am-icon-pencil'),
