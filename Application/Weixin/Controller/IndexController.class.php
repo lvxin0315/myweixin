@@ -192,7 +192,6 @@ class IndexController extends Controller{
 //        $file_contents = curl_exec($ch);
 //        curl_close($ch);
 //        echo $file_contents;
-
         switch($res['code']){
             case 100000://文字
                 $this->wechatObj->text($res['text'])->reply();
@@ -292,7 +291,6 @@ class IndexController extends Controller{
                     $this->wechatObj->news($array)->reply();
                 }
                 break;
-
         }
     }
 
