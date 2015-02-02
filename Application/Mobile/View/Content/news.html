@@ -1,6 +1,6 @@
 <extend name="Public:common" />
 <block name="body">
     {:tpl_head('呆萌圈',C('MOBILE_SITE'))}
-    {:news('精彩内容',$_list)}
+    {:article($_doc['content'])}
     {:widget()}
 </block>

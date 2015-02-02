@@ -42,6 +42,13 @@ class ContentController extends BaseController{
         $this->display();
     }
 
+    public function news(){
+        $id = I('id');
+        $doc = get_document($id);
+        $this->assign('_doc',$doc);
+        $this->display();
+    }
+
     public function about(){
 
     }
@@ -75,9 +82,8 @@ class ContentController extends BaseController{
     //整理article格式
     private function article($list){
         foreach($list as $key => $value){
-            $list[$key]['picUrl'] = get_cover($value['cover_id'],'path');
+            $list[$key]['url'] = U('Mobile/Content/news',array('id'=>$value['id']));
             $list[$key]['des'] = $value['description'];
-            $list[$key]['date'] = date('Y-m-d',$value['update_time']);
         }
         $this->assign('_list',$list);
     }

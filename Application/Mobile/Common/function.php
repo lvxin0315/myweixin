@@ -21,6 +21,9 @@ const SLIDER_LI = 'slider-li.tpl';
 const DETAIL = 'detail.tpl';
 const PIC_CONTENT = 'pic-content.tpl';
 const PIC_CONTENT_LI = 'pic-content-li.tpl';
+const NEWS = 'news.tpl';
+const NEWS_LI = 'news-li.tpl';
+const NEWS_LI_DES = 'news-li-des.tpl';
 
 /**
  * 导航处理
@@ -221,7 +224,6 @@ function detail($title,$pic,$url,$content){
 /**
  * 图文列表
  * @param String $title 标题
- * @param String $url 更多路径
  * @param Array $list 列表数据
  *      格式：array(
  *          array('pic'=>'pic','title'=>'title','des'=>'des'),
@@ -242,6 +244,37 @@ function pic_content($title,$list){
     }
     $picContentHtml = str_replace('{title}',$title,$picContentHtml);
     $html = str_replace('{picContentLi}',$li,$picContentHtml);
+    return str_replace(array("\r\n","\r","\n"),"",$html);
+}
+/**
+ * 新闻列表
+ * @param String $title 标题
+ * @param Array $list 列表数据
+ *      格式：array(
+ *          array('title'=>'title','des'=>'des'),
+ *          ……
+ *      )
+ * @return String
+*/
+function news($title,$list){
+    $newsHtml = file_get_contents(AMAZE_TPL_PATH . NEWS);
+    $newsLiHtml = file_get_contents(AMAZE_TPL_PATH . NEWS_LI);
+    $newsDesLiHtml = file_get_contents(AMAZE_TPL_PATH . NEWS_LI_DES);
+    $li = '';
+    foreach($list as $vo){
+        if(empty($vo['des'])){
+            $news_li_html = $newsLiHtml;
+            $news_li_html = str_replace('{title}',$vo['title'],$news_li_html);
+            $li .= str_replace('{url}',$vo['url'],$news_li_html);
+        }else{
+            $news_li_html = $newsDesLiHtml;
+            $news_li_html = str_replace('{title}',$vo['title'],$news_li_html);
+            $news_li_html = str_replace('{url}',$vo['url'],$news_li_html);
+            $li .= str_replace('{des}',$vo['des'],$news_li_html);
+        }
+    }
+    $newsHtml = str_replace('{title}',$title,$newsHtml);
+    $html = str_replace('{newsLi}',$li,$newsHtml);
     return str_replace(array("\r\n","\r","\n"),"",$html);
 }
 
