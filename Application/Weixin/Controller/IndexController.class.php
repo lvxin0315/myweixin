@@ -24,6 +24,8 @@ class IndexController extends Controller{
         $option = C("WEIXIN_OPTIONS");
         //创建对象
         $this->wechatObj = new \Wechat($option);
+        //保存消息
+        addWeixinLog(json_encode($this->wechatObj->getRev()->getRevData()));
     }
 
     public function index(){
@@ -44,8 +46,21 @@ class IndexController extends Controller{
 
     //文本消息处理
     private function makeText(){
-        $content = $this->wechatObj->getRev()->getRevContent();
-        $content = trim($content);
+        $dao = M('weixin_message_text');
+        //保留消息记录
+        $data = $this->wechatObj->getRev()->getRevData();
+        $text['openid'] = $data['FromUserName'];
+        $text['create_time'] = $data['CreateTime'];
+        $text['msg_id'] = $data['MsgId'];
+        $text['content'] = $data['Content'];
+        $text['status'] = 1;
+        $id = $dao->add($text);
+        if($id === false){
+            $this->replyText('服务器太忙了~请稍后再试试~');
+            exit;
+        }
+        //内容判断
+        $content = trim($text['content']);
         //特殊内容回复
         if(strstr($content,'呆萌圈')){
             $this->replyWelcome();
@@ -53,14 +68,15 @@ class IndexController extends Controller{
         }
         //基本内容回复
         switch($content){
-            case '新鲜事':
-                $this->xinxianshi();
-                break;
+//            case '新鲜事':
+//                $this->xinxianshi();
+//                break;
             case 'help':
                 $this->help();
                 break;
-            case '小礼物':
-                $this->chongwuShop();
+//            case '小礼物':
+//                $this->chongwuShop();
+//                break;
             default:
                 $this->autoReplyByTuling($content);
         }
@@ -74,25 +90,23 @@ class IndexController extends Controller{
                 $this->replyWelcome();
                 break;
         }
-
     }
     //图片消息处理
     private function makeImage(){
-        $dao = M('image_message');
+        $dao = M('weixin_message_image');
         //保留消息记录
-        $data = $this->wechatObj->getRevData();
+        $data = $this->wechatObj->getRev()->getRevData();
         $image['openid'] = $data['FromUserName'];
         $image['create_time'] = $data['CreateTime'];
         $image['pic_url'] = $data['PicUrl'];
         //图片存在校验
         $res = $dao->where("pic_url LIKE '{$image['pic_url']}'")->find();
         if(!empty($res)){
-            echo '';
+            $this->replyText('感谢您的分享，小编一定会分享给全国各地的亲们~');
             exit;
         }
         $image['msg_id'] = $data['MsgId'];
         $image['media_id'] = $data['MediaId'];
-        $image['openid'] = $data['FromUserName'];
         $image['status'] = 1;
         $id = $dao->add($image);
         if(empty($id)){
@@ -102,23 +116,26 @@ class IndexController extends Controller{
         }
     }
     //新鲜事回复
-    private function xinxianshi(){
-        $list = M('html')->where("type LIKE 'xinxianshi'")->order('create_time DESC')->limit(8)->select();
-        foreach($list as $v){
-            $data['Title'] = empty($v['title']) ? '暂无标题' : $v['title'];
-            $data['Description'] = date('Y-m-d',$v['create_time']);
-            $data['PicUrl'] = $v['pic'];
-            $data['Url'] = C('WEB_SITE').U('Mobile/Content/detail',array('id'=>$v['id']));
-            $array[] = $data;
-        }
-        $this->wechatObj->news($array)->reply();
-    }
+//    private function xinxianshi(){
+//        $list = M('html')->where("type LIKE 'xinxianshi'")->order('create_time DESC')->limit(8)->select();
+//        foreach($list as $v){
+//            $data['Title'] = empty($v['title']) ? '暂无标题' : $v['title'];
+//            $data['Description'] = date('Y-m-d',$v['create_time']);
+//            $data['PicUrl'] = $v['pic'];
+//            $data['Url'] = C('WEB_SITE').U('Mobile/Content/detail',array('id'=>$v['id']));
+//            $array[] = $data;
+//        }
+//        $this->wechatObj->news($array)->reply();
+//    }
     //消息回复，包含昵称设置判断
     private function replyText($message){
         $user = M('user')->where("openid LIKE '{$this->wechatObj->getRev()->getRevFrom()}'")->find();
         if(empty($user['nickname'])){
-            $url = C('WEB_SITE').U('Home/User/info',array('openid'=>$this->wechatObj->getRev()->getRevFrom()));
+            $url = C('WEB_SITE').U('Mobile/User/info',array('openid'=>$this->wechatObj->getRev()->getRevFrom()));
             $message .= "\r\n"."快来完善自己<a href='{$url}'>昵称</a>，大家可是都有昵称了呢~";
+        }else{
+            $url = C('WEB_SITE').U('Mobile/Content/index',array('openid'=>$this->wechatObj->getRev()->getRevFrom()));
+            $message .= "\r\n"."快来看看，<a href='{$url}'>点击这里</a>~";
         }
         $this->wechatObj->text($message)->reply();
     }
@@ -133,25 +150,34 @@ class IndexController extends Controller{
     }
     //help
     private function help(){
-        $message = "回复语及描述。\r\n";
-        $helpList = C('HELP_CONFIG');
-        foreach($helpList as $v){
-            $message.= $v['key']."---".$v['des']."\r\n";
+//        $message = "回复语及描述。\r\n";
+//        $helpList = C('HELP_CONFIG');
+//        foreach($helpList as $v){
+//            $message.= $v['key']."---".$v['des']."\r\n";
+//        }
+//        $this->wechatObj->text($message)->reply();
+        $user = M('user')->where("openid LIKE '{$this->wechatObj->getRev()->getRevFrom()}'")->find();
+        if(empty($user['nickname'])){
+            $url = C('WEB_SITE').U('Mobile/User/info',array('openid'=>$this->wechatObj->getRev()->getRevFrom()));
+            $message = "快来完善自己<a href='{$url}'>昵称</a>，大家可是都有昵称了呢~";
+        }else{
+            $url = C('WEB_SITE').U('Mobile/Content/index',array('openid'=>$this->wechatObj->getRev()->getRevFrom()));
+            $message = "快来看看，<a href='{$url}'>点击这里</a>~";
         }
         $this->wechatObj->text($message)->reply();
     }
     //宠物店相关内容
-    private function chongwuShop(){
-        $list = M('html')->where("type LIKE 'shangpin'")->order('create_time DESC')->limit(8)->select();
-        foreach($list as $v){
-            $data['Title'] = empty($v['title']) ? '暂无标题' : $v['title'];
-            $data['Description'] = date('Y-m-d',$v['create_time']);
-            $data['PicUrl'] = $v['pic'];
-            $data['Url'] = C('WEB_SITE').U('Mobile/Content/detail',array('id'=>$v['id']));
-            $array[] = $data;
-        }
-        $this->wechatObj->news($array)->reply();
-    }
+//    private function chongwuShop(){
+//        $list = M('html')->where("type LIKE 'shangpin'")->order('create_time DESC')->limit(8)->select();
+//        foreach($list as $v){
+//            $data['Title'] = empty($v['title']) ? '暂无标题' : $v['title'];
+//            $data['Description'] = date('Y-m-d',$v['create_time']);
+//            $data['PicUrl'] = $v['pic'];
+//            $data['Url'] = C('WEB_SITE').U('Mobile/Content/detail',array('id'=>$v['id']));
+//            $array[] = $data;
+//        }
+//        $this->wechatObj->news($array)->reply();
+//    }
     //图灵自动回复机器人
     private function autoReplyByTuling($reqInfo){
         $config = C('TULING_CONFIG');
