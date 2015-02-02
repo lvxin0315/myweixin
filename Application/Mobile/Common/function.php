@@ -112,6 +112,7 @@ function picture($pictureList){
         $picture_li_html = $pictureLiHtml;
         $picture_li_html = str_replace('{picUrl}',$vo['picUrl'],$picture_li_html);
         $picture_li_html = str_replace('{des}',$vo['des'],$picture_li_html);
+        $picture_li_html = str_replace('{url}',$vo['url'],$picture_li_html);
         $picture_li .= str_replace('{date}',$vo['date'],$picture_li_html);
     }
     $html = str_replace('{pictureLi}',$picture_li,$pictureHtml);

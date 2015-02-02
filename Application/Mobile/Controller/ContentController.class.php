@@ -57,6 +57,7 @@ class ContentController extends BaseController{
         $map['category_id'] = get_category_id('tel_me');
         $detail = get_document_list(array('category_id'=>get_category_id('tel_me')),$order = 'id DESC',$p = 1,$rows = 1);
         $doc = get_document($detail[0]['id']);
+        $detail[0]['pic'] = get_cover($detail[0]['cover_id'],'path');
         $this->assign('_doc',$doc);
         $this->display('tel_me');
     }
@@ -76,6 +77,7 @@ class ContentController extends BaseController{
             $list[$key]['picUrl'] = get_cover($value['cover_id'],'path');
             $list[$key]['des'] = $value['description'];
             $list[$key]['date'] = date('Y-m-d',$value['update_time']);
+            $list[$key]['url'] = U('Mobile/Content/detail',array('id'=>$value['id']));
         }
         $this->assign('_list',$list);
     }
